@@ -16,10 +16,10 @@ app.config(['$routeProvider', function($routeProvider){
 }]);
 
 app.run(['$rootScope', function($rootScope){
-  
+
   // Connect Socket.io
   var socket = io({
-    'path': window.location.pathname + '/socket.io'
+    'path': window.location.pathname.replace(/\/$/, "") + '/socket.io'
   });
 
   socket.on('newMail', function(data) {
@@ -29,7 +29,7 @@ app.run(['$rootScope', function($rootScope){
   socket.on('deleteMail', function(data) {
     $rootScope.$emit('deleteMail', data);
   });
-  
+
   $rootScope.$on('Refresh', function() {
     console.log('Refresh event called.');
   });
@@ -41,7 +41,7 @@ app.run(['$rootScope', function($rootScope){
  */
 
 app.filter('newLines', function() {
-  
+
   return function(text) {
     return text && text.replace(/\n/g, '<br>') || '';
   };
